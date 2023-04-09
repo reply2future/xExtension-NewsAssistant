@@ -4,9 +4,9 @@ Use the api of `OpenAI` to summary the news.
 
 ## Features
 
-- [ ] summary the same topic news cross over different rss feeds.
+- [x] summary the same topic news cross over different rss feeds.
 - [ ] add the topic tag automatically
-- [ ] change the summary rss feed to read status
+- [x] change the summary rss feed to read status
 
 ## Usage
 
