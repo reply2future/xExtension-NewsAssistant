@@ -1,0 +1,11 @@
+<div class="post content">
+	<h1><?php echo _t('gen.layout.title'); ?></h1>
+	<p><?= $this->summary_content ?? _t('gen.holder.empty_content') ?></p>
+	<div class="form-group form-actions">
+		<div id="summary_ids"><?php echo json_encode($this->summary_ids) ?></div>
+		<div class="group-controls">
+			<button type="button" class="btn btn-important" id="set_read_btn"><?php echo _t('gen.action.set_read'); ?></button>
+			<a class="btn" href="./"><?php echo _t('gen.action.back'); ?></a>
+		</div>
+	</div>
+</div>
