@@ -27,6 +27,27 @@
 
 /* Animation for the loading spinner */
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.badge-button {
+	position: relative;
+	padding: 0 20px;
+}
+
+.badge {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: red;
+	color: white;
+	font-size: 8px;
+	padding: 1px 4px;
+	border-radius: 50%;
 }

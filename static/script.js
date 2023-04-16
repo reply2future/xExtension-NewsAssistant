@@ -5,8 +5,11 @@
 	const summaryIds = JSON.parse(summaryIdsElement.innerHTML);
 	summaryIdsElement.outerHTML = '';
 
-	const setReadBtn = document.querySelector('#set_read_btn');
+	const setReadBtn = document.getElementById('set_read_btn');
 	const loader = document.getElementById('loader');
+	const readBadge = document.getElementById('read_badge');
+
+	readBadge.innerText = (summaryIds && summaryIds.length) || 0;
 
 	function showLoading() {
 		loader.style.display = 'flex';
