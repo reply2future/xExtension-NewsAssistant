@@ -43,9 +43,11 @@ function streamOpenAiApi(object $config, string $prompt, callable $task_callback
 
 		$msg_list = explode(PHP_EOL, trim($data));
 		foreach ($msg_list as $msg) {
-			$msg = trim(substr($msg, 5));
+			$msg = trim(substr(trim($msg), 5));
 
-			if ($msg == "[DONE]") {
+			if ($msg == '') {
+				continue;
+			} else if ($msg == "[DONE]") {
 				$finish_callback();
 			} else {
 				$task_callback(_dealResponse(json_decode($msg)));
