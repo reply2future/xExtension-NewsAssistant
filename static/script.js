@@ -63,7 +63,7 @@
 
 				hideLoading();
 
-				window.location.href = '/';
+				window.location.href = `/i/?a=normal&get=${urlParams.get('cat_id')}`;
 			};
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({
@@ -83,5 +83,10 @@
 
 	function hideLoading() {
 		loader.style.display = 'none';
+	}
+
+	const backBtn = document.getElementById('back_btn');
+	backBtn.onclick = () => {
+		history.back();
 	}
 }());
