@@ -63,7 +63,7 @@
 
 				hideLoading();
 
-				window.location.href = `/i/?a=normal&get=${urlParams.get('cat_id')}`;
+				window.location.href = `/i/?a=normal&get=c_${urlParams.get('cat_id')}`;
 			};
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({
