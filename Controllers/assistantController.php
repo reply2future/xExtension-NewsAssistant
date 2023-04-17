@@ -1,10 +1,9 @@
 <?php
 
-require(THIRDPARTY_EXTENSIONS_PATH . '/xExtension-NewsAssistant/helper.php');
+require(dirname(__DIR__) . '/helper.php');
 
 class FreshExtension_assistant_Controller extends Minz_ActionController
 {
-
 	const DEFAULT_MODEL = 'text-davinci-003';
 	const DEFAULT_TEMPERATURE = 0.2;
 	const DEFAULT_MAX_TOKENS = 4096;
@@ -25,9 +24,25 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 			'temperature' => $system_conf->temperature,
 			'max_tokens' => $system_conf->max_tokens,
 			'openai_api_key' => $system_conf->openai_api_key,
-			'to_translate' => $system_conf->to_translate,
+			'prompt' => $system_conf->prompt,
 		);
 		$this->entryDAO = FreshRSS_Factory::createEntryDao();
+	}
+
+	public final function getFileUrl(string $filename, string $type): string
+	{
+		$assistantExtensionPath = dirname(__DIR__);
+		$assistantExtensionDirName = basename($assistantExtensionPath);
+		$file_name_url = urlencode($assistantExtensionDirName . "/static/{$filename}");
+		$mtime = @filemtime($assistantExtensionPath . "/static/{$filename}");
+
+		return Minz_Url::display("/ext.php?f={$file_name_url}&amp;t={$type}&amp;{$mtime}", 'php');
+	}
+
+	public function summaryAction()
+	{
+		Minz_View::appendStyle($this->getFileUrl('style.css', 'css'));
+		Minz_View::appendScript($this->getFileUrl('script.js', 'js'));
 	}
 
 	private function _echoData(string $data, string $event_name = '')
@@ -37,7 +52,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		}
 
 		echo 'data: ' . $data . "\n\n";
-		
+
 		ob_flush();
 		flush();
 	}
@@ -62,7 +77,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 
 		if (count($news) > 0) {
 			$content = self::buildNewsContent($news);
-			$content = self::addSummaryPrompt($content);
+			$content = self::addSummaryPrompt($this->config->prompt, $content);
 
 			streamOpenAiApi(
 				$this->config,
@@ -73,28 +88,13 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 				},
 				function () {
 					$this->_echoData('', 'done');
+					exit();
 				}
 			);
 		} else {
 			$this->_echoData(_t('gen.holder.empty_content'), 'empty');
+			exit();
 		}
-
-		while (true) {
-
-			$this->_echoData('', 'ping');
-
-			// if the connection has been closed by the client we better exit the loop
-			if (connection_aborted()) {
-				Minz_Log::debug('connection aborted!');
-				exit();
-			}
-
-			sleep(1);
-		}
-	}
-
-	public function summaryAction()
-	{
 	}
 
 	public static function buildNewsContent(array $news)
@@ -109,15 +109,9 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		return implode('', array_map($pickTitleFn, $news));
 	}
 
-	public static function endsWithPunctuation($str)
+	public static function addSummaryPrompt(string $prompt, string $content)
 	{
-		$pattern = '/\p{P}$/u'; // regex pattern for ending with punctuation marks
-		return preg_match($pattern, $str);
-	}
-
-	public static function addSummaryPrompt(string $content)
-	{
-		return 'Summarize this as you are news editor, you should merge the similar topic.\n\n' . $content . '\n\n';
+		return $prompt . "\n\n" . $content;
 	}
 
 	private function getNews(int $cat_id = 0, int $state = FreshRSS_Entry::STATE_NOT_READ, int $limit = 30)

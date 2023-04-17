@@ -6,7 +6,7 @@ return array(
 		'model' => 'Model',
 		'max_tokens' => 'Max Tokens',
 		'temperature' => 'Temperature',
-		'to_translate' => 'To Translate',
+		'prompt' => 'Prompt',
 		'limit' => 'Read the number of feeds',
 	),
 );

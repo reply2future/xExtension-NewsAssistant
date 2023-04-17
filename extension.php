@@ -5,9 +5,6 @@ class NewsAssistantExtension extends Minz_Extension
 {
 	public function init()
 	{
-		Minz_View::appendStyle($this->getFileUrl('style.css', 'css'));
-		Minz_View::appendScript($this->getFileUrl('script.js', 'js'));
-
 		$this->registerTranslates();
 
 		$this->registerController('assistant');
@@ -37,7 +34,7 @@ class NewsAssistantExtension extends Minz_Extension
 			FreshRSS_Context::$system_conf->temperature = filter_var(Minz_Request::param('temperature', 1), FILTER_VALIDATE_FLOAT);;
 			FreshRSS_Context::$system_conf->limit = filter_var(Minz_Request::param('limit', 30), FILTER_VALIDATE_FLOAT);;
 			FreshRSS_Context::$system_conf->model = Minz_Request::param('model', 'text-davinci-003');
-			FreshRSS_Context::$system_conf->to_translate = filter_var(Minz_Request::param('to_translate', true), FILTER_VALIDATE_BOOLEAN);
+			FreshRSS_Context::$system_conf->prompt = Minz_Request::param('prompt', 'Summarize this as you are news editor, you should merge the similar topic.');
 			FreshRSS_Context::$system_conf->save();
 		}
 	}

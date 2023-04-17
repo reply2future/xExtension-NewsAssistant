@@ -3,38 +3,38 @@
 	<div class="form-group">
 		<label class="group-name" for="openai_api_key"><?php echo _t('ext.field.openai_api_key'); ?></label>
 		<div class="group-controls">
-			<input type="text" name="openai_api_key" id="openai_api_key" value="<?php echo FreshRSS_Context::$system_conf->openai_api_key; ?>">
+			<input type="text" name="openai_api_key" id="openai_api_key" value="<?php echo FreshRSS_Context::$system_conf->openai_api_key ?? ''; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="max_tokens"><?php echo _t('ext.field.max_tokens'); ?></label>
 		<div class="group-controls">
-			<input type="range" name="max_tokens" id="max_tokens" min="7" max="4096" value="<?php echo FreshRSS_Context::$system_conf->max_tokens; ?>">
+			<input type="range" name="max_tokens" id="max_tokens" min="7" max="4096" value="<?php echo FreshRSS_Context::$system_conf->max_tokens ?? 2048; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="temperature"><?php echo _t('ext.field.temperature'); ?></label>
 		<div class="group-controls">
-			<input type="range" name="temperature" id="temperature" min="0" max="2" step="0.1" value="<?php echo FreshRSS_Context::$system_conf->temperature; ?>">
+			<input type="range" name="temperature" id="temperature" min="0" max="2" step="0.1" value="<?php echo FreshRSS_Context::$system_conf->temperature ?? 1.0; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="limit"><?php echo _t('ext.field.limit'); ?></label>
 		<div class="group-controls">
-			<input type="number" name="limit" id="limit" value="<?php echo FreshRSS_Context::$system_conf->limit; ?>">
+			<input type="number" name="limit" id="limit" value="<?php echo FreshRSS_Context::$system_conf->limit ?? 30; ?>">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="to_translate"><?php echo _t('ext.field.to_translate'); ?></label>
+		<label class="group-name" for="prompt"><?php echo _t('ext.field.prompt'); ?></label>
 		<div class="group-controls">
-			<input type="checkbox" name="to_translate" id="to_translate" value="1" <?php echo (FreshRSS_Context::$system_conf->to_translate ? 'checked' : ''); ?>>
+			<textarea id="prompt" name="prompt" rows="4" cols="50"><?php echo FreshRSS_Context::$system_conf->prompt ?? 'Summarize this as you are news editor, you should merge the similar topic.'; ?></textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="model"><?php echo _t('ext.field.model'); ?></label>
 		<div class="group-controls">
 			<select name="model" id="model">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->model); ?></option>
+				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'text-davinci-003'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'text-davinci-003'); ?></option>
 				<option value="-">-</option>
 				<option value="babbage">babbage</option>
 				<option value="davinci">davinci</option>
