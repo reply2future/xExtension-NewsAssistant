@@ -10,6 +10,11 @@ Use the api of `OpenAI` to summary the news.
 
 ## Usage
 
+### Configuration
+#### Get the token of OpenAI
+1. create your OpenAI account
+2. go to [there](https://platform.openai.com/account/api-keys) to generate a new API key, and copy it.
+#### Setup the extension
 
 https://user-images.githubusercontent.com/6359152/232393261-0874fd35-563b-43ad-846c-f4bb48aef143.mp4
 
