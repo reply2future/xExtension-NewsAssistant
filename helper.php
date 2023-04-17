@@ -38,14 +38,18 @@ function streamOpenAiApi(object $config, string $prompt, callable $task_callback
 		],
 	];
 
-	$curl_info[CURLOPT_WRITEFUNCTION] = function($curl_info, $data) use ($task_callback, $finish_callback) {
-		$msg = trim(substr($data, 5));
-		Minz_Log::debug('Receive msg:' . $msg);
+	$curl_info[CURLOPT_WRITEFUNCTION] = function ($curl_info, $data) use ($task_callback, $finish_callback) {
+		Minz_Log::debug('Receive msg:' . $data);
 
-		if ($msg == "[DONE]") {
-			$finish_callback();
-		} else {
-			$task_callback(_dealResponse(json_decode($msg)));
+		$msg_list = explode(PHP_EOL, trim($data));
+		foreach ($msg_list as $msg) {
+			$msg = trim(substr($msg, 5));
+
+			if ($msg == "[DONE]") {
+				$finish_callback();
+			} else {
+				$task_callback(_dealResponse(json_decode($msg)));
+			}
 		}
 
 		return strlen($data);
