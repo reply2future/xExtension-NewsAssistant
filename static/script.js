@@ -6,11 +6,21 @@
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const evtSource = new EventSource(`/i/?c=assistant&a=stream&cat_id=${urlParams.get('cat_id')}&state=${urlParams.get('state')}`);
-	
+
+	function dealWithEventData(data) {
+		if (data == null) return '';
+
+		if (data.trim() == '') {
+			return '<br>';
+		}
+
+		return data;
+	}
+
 	evtSource.onmessage = (event) => {
 		console.log('Received message');
 
-		summaryContentDiv.innerText += event.data;
+		summaryContentDiv.innerHTML += dealWithEventData(event.data);
 	};
 
 	evtSource.onopen = (event) => {
