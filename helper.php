@@ -12,6 +12,11 @@ function _dealResponse($openai_response)
 	return $openai_response->choices[0]->text;
 }
 
+function _errorHtmlSuffix($error_msg)
+{
+	return 'Ooooops!!!!<br><br>' . $error_msg;
+}
+
 function streamOpenAiApi(object $config, string $prompt, callable $task_callback, callable $finish_callback)
 {
 	$post_fields = json_encode(array(
@@ -40,6 +45,13 @@ function streamOpenAiApi(object $config, string $prompt, callable $task_callback
 
 	$curl_info[CURLOPT_WRITEFUNCTION] = function ($curl_info, $data) use ($task_callback, $finish_callback) {
 		Minz_Log::debug('Receive msg:' . $data);
+
+		// if http status code != 200, then call the finish_callback to send the error message and stop the stream
+		if (curl_getinfo($curl_info, CURLINFO_HTTP_CODE) != 200) {
+			$task_callback(_errorHtmlSuffix(json_decode($data)->error->message));
+			$finish_callback();
+			return strlen($data);
+		}
 
 		$msg_list = explode(PHP_EOL, trim($data));
 		foreach ($msg_list as $msg) {

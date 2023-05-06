@@ -25,6 +25,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 			'max_tokens' => $system_conf->max_tokens,
 			'openai_api_key' => $system_conf->openai_api_key,
 			'prompt' => $system_conf->prompt,
+			'field' => $system_conf->field,
 		);
 		$this->entryDAO = FreshRSS_Factory::createEntryDao();
 	}
@@ -76,7 +77,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		$this->_echoData(json_encode(array('summary_ids' => $summary_ids)), 'load_summary_ids');
 
 		if (count($news) > 0) {
-			$content = self::buildNewsContent($news);
+			$content = self::buildNewsContent($this->config->field, $news);
 			$content = self::addSummaryPrompt($this->config->prompt, $content);
 
 			streamOpenAiApi(
@@ -97,10 +98,10 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		}
 	}
 
-	public static function buildNewsContent(array $news)
+	public static function buildNewsContent(string $field, array $news)
 	{
-		$pickTitleFn = function ($newsItem) {
-			$title = $newsItem['title'];
+		$pickTitleFn = function ($newsItem) use ($field) {
+			$title = $newsItem[$field];
 
 			if (endsWithPunctuation($title)) return $title;
 			return $title . '.';

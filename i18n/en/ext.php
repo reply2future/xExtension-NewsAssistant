@@ -8,5 +8,6 @@ return array(
 		'temperature' => 'Temperature',
 		'prompt' => 'Prompt',
 		'limit' => 'Read the number of feeds',
+		'field' => 'Field to send to OpenAI',
 	),
 );

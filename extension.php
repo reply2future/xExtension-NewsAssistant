@@ -35,6 +35,7 @@ class NewsAssistantExtension extends Minz_Extension
 			FreshRSS_Context::$system_conf->limit = filter_var(Minz_Request::param('limit', 30), FILTER_VALIDATE_FLOAT);;
 			FreshRSS_Context::$system_conf->model = Minz_Request::param('model', 'text-davinci-003');
 			FreshRSS_Context::$system_conf->prompt = Minz_Request::param('prompt', 'Summarize this as you are news editor, you should merge the similar topic.');
+			FreshRSS_Context::$system_conf->field = Minz_Request::param('field', 'content');
 			FreshRSS_Context::$system_conf->save();
 		}
 	}
