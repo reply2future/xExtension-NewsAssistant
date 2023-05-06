@@ -21,6 +21,16 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="group-name" for="field"><?php echo _t('ext.field.field'); ?></label>
+		<div class="group-controls">
+			<select name="field" id="field">
+				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'content'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'content'); ?></option>
+				<option value="title">title</option>
+				<option value="content">content</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="group-name" for="limit"><?php echo _t('ext.field.limit'); ?></label>
 		<div class="group-controls">
 			<input type="number" name="limit" id="limit" value="<?php echo FreshRSS_Context::$system_conf->limit ?? 30; ?>">
