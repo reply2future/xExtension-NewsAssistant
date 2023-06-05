@@ -74,6 +74,12 @@ function streamOpenAiApi(object $config, string $prompt, callable $task_callback
 	curl_setopt_array($curl, $curl_info);
 	$response = curl_exec($curl);
 
+	// handle the error request of curl
+	if (curl_errno($curl)) {
+		$task_callback(_errorHtmlSuffix(curl_error($curl)));
+		$finish_callback();
+	}
+
 	curl_close($curl);
 	return $response;
 }
