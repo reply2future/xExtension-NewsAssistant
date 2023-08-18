@@ -8,11 +8,7 @@
 	const evtSource = new EventSource(`/i/?c=assistant&a=stream&cat_id=${urlParams.get('cat_id')}&state=${urlParams.get('state')}`);
 
 	function dealWithEventData(data) {
-		if (data == null) return '';
-
-		if (data.trim() == '') {
-			return '<br>';
-		}
+		if (data == null || data.trim() == '') return '';
 
 		return data;
 	}
