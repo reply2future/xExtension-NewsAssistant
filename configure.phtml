@@ -43,23 +43,20 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<!-- make the input element to support input and select -->
 		<label class="group-name" for="model"><a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-model" target="_blank"><?php echo _t('ext.field.model') . " (?)"; ?></a></label>
 		<div class="group-controls">
 			<select name="model" id="model">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'text-davinci-003'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'text-davinci-003'); ?></option>
+				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?></option>
 				<option value="-">-</option>
-				<option value="babbage">babbage</option>
-				<option value="davinci">davinci</option>
-				<option value="text-davinci-001">text-davinci-001</option>
-				<option value="ada">ada</option>
-				<option value="text-curie-001">text-curie-001</option>
-				<option value="text-davinci-003">text-davinci-003</option>
-				<option value="text-ada-001">text-ada-001</option>
-				<option value="curie-instruct-beta">curie-instruct-beta</option>
-				<option value="davinci-instruct-beta">davinci-instruct-beta</option>
-				<option value="text-babbage-001">text-babbage-001</option>
-				<option value="curie">curie</option>
-				<option value="text-davinci-002">text-davinci-002</option>
+				<option value="gpt-4">gpt-4</option>
+				<option value="gpt-4-0613">gpt-4-0613</option>
+				<option value="gpt-4-32k">gpt-4-32k</option>
+				<option value="gpt-4-32k-0613">gpt-4-32k-0613</option>
+				<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+				<option value="gpt-3.5-turbo-0613">gpt-3.5-turbo-0613</option>
+				<option value="gpt-3.5-turbo-16k">gpt-3.5-turbo-16k</option>
+				<option value="gpt-3.5-turbo-16k-0613">gpt-3.5-turbo-16k-0613</option>
 			</select>
 		</div>
 	</div>
