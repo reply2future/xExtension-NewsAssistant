@@ -1,6 +1,6 @@
 <?php
 
-const OPENAI_API_COMPLETIONS_URL = 'https://api.openai.com/v1/completions';
+const OPENAI_API_COMPLETIONS_URL = 'https://api.openai.com/v1/chat/completions';
 function endsWithPunctuation($str)
 {
 	$pattern = '/\p{P}$/u'; // regex pattern for ending with punctuation marks
@@ -9,7 +9,7 @@ function endsWithPunctuation($str)
 
 function _dealResponse($openai_response)
 {
-	return $openai_response->choices[0]->text;
+	return $openai_response->choices[0]->delta->content ?? '';
 }
 
 function _errorHtmlSuffix($error_msg)
@@ -17,11 +17,20 @@ function _errorHtmlSuffix($error_msg)
 	return 'Ooooops!!!!<br><br>' . $error_msg;
 }
 
-function streamOpenAiApi(object $config, string $prompt, callable $task_callback, callable $finish_callback)
+function streamOpenAiApi(object $config, string $prompt, string $content, callable $task_callback, callable $finish_callback)
 {
 	$post_fields = json_encode(array(
 		"model" => $config->model,
-		"prompt" => $prompt,
+		"messages" => array(
+			array(
+				"role" => "system",
+				"content" => $prompt,
+			),
+			array(
+				"role" => "user",
+				"content" => $content,
+			),
+		),
 		"max_tokens" => $config->max_tokens,
 		"temperature" => $config->temperature,
 		"stream" => true,
