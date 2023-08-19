@@ -4,9 +4,6 @@ require(dirname(__DIR__) . '/helper.php');
 
 class FreshExtension_assistant_Controller extends Minz_ActionController
 {
-	const DEFAULT_MODEL = 'text-davinci-003';
-	const DEFAULT_TEMPERATURE = 0.2;
-	const DEFAULT_MAX_TOKENS = 4096;
 	const NEWS_CATEGORY_TYPE = 'c';
 
 	private $config = array();
