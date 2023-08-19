@@ -7,14 +7,14 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="max_tokens"><a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-max_tokens" target="_blank"><?php echo _t('ext.field.max_tokens') . " (?)"; ?></a></label>
+		<label class="group-name" for="max_tokens"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-max_tokens" target="_blank"><?php echo _t('ext.field.max_tokens') . " (?)"; ?></a></label>
 		<div class="group-controls">
 			<input type="range" name="max_tokens" id="max_tokens" min="7" max="4096" value="<?php echo FreshRSS_Context::$system_conf->max_tokens ?? 2048; ?>">
 			<output for="max_tokens"><?php echo FreshRSS_Context::$system_conf->max_tokens ?? 2048; ?></output>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="temperature"><a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature" target="_blank" ><?php echo _t('ext.field.temperature') . " (?)"; ?></a></label>
+		<label class="group-name" for="temperature"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature" target="_blank"><?php echo _t('ext.field.temperature') . " (?)"; ?></a></label>
 		<div class="group-controls">
 			<input type="range" name="temperature" id="temperature" min="0" max="2" step="0.1" value="<?php echo FreshRSS_Context::$system_conf->temperature ?? 1.0; ?>">
 			<output for="temperature"><?php echo FreshRSS_Context::$system_conf->temperature ?? 1.0; ?></output>
@@ -37,27 +37,26 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="prompt"><a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-prompt" target="_blank" ><?php echo _t('ext.field.prompt') . " (?)"; ?></a></label>
+		<label class="group-name" for="prompt"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-content" target="_blank"><?php echo _t('ext.field.prompt') . " (?)"; ?></a></label>
 		<div class="group-controls">
 			<textarea id="prompt" name="prompt" rows="4" cols="50"><?php echo FreshRSS_Context::$system_conf->prompt ?? 'Summarize this as you are news editor, you should merge the similar topic.'; ?></textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<!-- make the input element to support input and select -->
-		<label class="group-name" for="model"><a href="https://platform.openai.com/docs/api-reference/completions/create#completions/create-model" target="_blank"><?php echo _t('ext.field.model') . " (?)"; ?></a></label>
+		<label class="group-name" for="model"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-model" target="_blank"><?php echo _t('ext.field.model') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<select name="model" id="model">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?></option>
-				<option value="-">-</option>
-				<option value="gpt-4">gpt-4</option>
-				<option value="gpt-4-0613">gpt-4-0613</option>
-				<option value="gpt-4-32k">gpt-4-32k</option>
-				<option value="gpt-4-32k-0613">gpt-4-32k-0613</option>
-				<option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
-				<option value="gpt-3.5-turbo-0613">gpt-3.5-turbo-0613</option>
-				<option value="gpt-3.5-turbo-16k">gpt-3.5-turbo-16k</option>
-				<option value="gpt-3.5-turbo-16k-0613">gpt-3.5-turbo-16k-0613</option>
-			</select>
+			<input list="select-models" id="model" name="model" value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?>">
+			<datalist id="select-models">
+				<option value="gpt-4">
+				<option value="gpt-4-0613">
+				<option value="gpt-4-32k">
+				<option value="gpt-4-32k-0613">
+				<option value="gpt-3.5-turbo">
+				<option value="gpt-3.5-turbo-0613">
+				<option value="gpt-3.5-turbo-16k">
+				<option value="gpt-3.5-turbo-16k-0613">
+			</datalist>
 		</div>
 	</div>
 
