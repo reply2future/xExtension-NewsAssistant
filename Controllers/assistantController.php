@@ -4,9 +4,6 @@ require(dirname(__DIR__) . '/helper.php');
 
 class FreshExtension_assistant_Controller extends Minz_ActionController
 {
-	const DEFAULT_MODEL = 'text-davinci-003';
-	const DEFAULT_TEMPERATURE = 0.2;
-	const DEFAULT_MAX_TOKENS = 4096;
 	const NEWS_CATEGORY_TYPE = 'c';
 
 	private $config = array();
@@ -78,10 +75,10 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 
 		if (count($news) > 0) {
 			$content = self::buildNewsContent($this->config->field, $news);
-			$content = self::addSummaryPrompt($this->config->prompt, $content);
 
 			streamOpenAiApi(
 				$this->config,
+				$this->config->prompt,
 				$content,
 				function ($msg) {
 					if ($msg == null) return;
@@ -108,11 +105,6 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		};
 
 		return implode('', array_map($pickTitleFn, $news));
-	}
-
-	public static function addSummaryPrompt(string $prompt, string $content)
-	{
-		return $prompt . "\n\n" . $content;
 	}
 
 	private function getNews(int $cat_id = 0, int $state = FreshRSS_Entry::STATE_NOT_READ, int $limit = 30)
