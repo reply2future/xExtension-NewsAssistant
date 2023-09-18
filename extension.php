@@ -29,6 +29,7 @@ class NewsAssistantExtension extends Minz_Extension
 		$this->registerTranslates();
 
 		if (Minz_Request::isPost()) {
+			FreshRSS_Context::$system_conf->openai_base_url = rtrim(Minz_Request::param('openai_base_url', 'https://api.openai.com'), '/');
 			FreshRSS_Context::$system_conf->openai_api_key = Minz_Request::param('openai_api_key', '');
 			FreshRSS_Context::$system_conf->max_tokens = filter_var(Minz_Request::param('max_tokens', 7), FILTER_VALIDATE_INT);
 			FreshRSS_Context::$system_conf->temperature = filter_var(Minz_Request::param('temperature', 1), FILTER_VALIDATE_FLOAT);;
