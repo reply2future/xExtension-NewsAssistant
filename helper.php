@@ -1,6 +1,6 @@
 <?php
 
-const OPENAI_API_COMPLETIONS_URL = 'https://api.openai.com/v1/chat/completions';
+const OPENAI_API_COMPLETIONS_URL = '/v1/chat/completions';
 function endsWithPunctuation($str)
 {
 	$pattern = '/\p{P}$/u'; // regex pattern for ending with punctuation marks
@@ -37,7 +37,7 @@ function streamOpenAiApi(object $config, string $prompt, string $content, callab
 	));
 
 	$curl_info = [
-		CURLOPT_URL            => OPENAI_API_COMPLETIONS_URL,
+		CURLOPT_URL            => $config->openai_base_url . OPENAI_API_COMPLETIONS_URL,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING       => 'utf-8',
 		CURLOPT_MAXREDIRS      => 10,
