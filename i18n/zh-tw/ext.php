@@ -2,6 +2,7 @@
 
 return array(
 	'field' => array(
+		'openai_base_url' => '請求基地址',
 		'openai_api_key' => 'OpenAI的API Key',
 		'model' => '模型',
 		'max_tokens' => 'Max Tokens',

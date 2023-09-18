@@ -5,6 +5,7 @@ require(dirname(__DIR__) . '/helper.php');
 class FreshExtension_assistant_Controller extends Minz_ActionController
 {
 	const NEWS_CATEGORY_TYPE = 'c';
+	const DEFAULT_OPENAI_BASE_URL = 'https://api.openai.com';
 
 	private $config = array();
 	private $entryDAO = null;
@@ -16,7 +17,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		$system_conf = Minz_Configuration::get('system');
 		$this->config = (object) array(
 			'limit' => $system_conf->limit,
-
+			'openai_base_url' => empty($system_conf->openai_base_url) ? self::DEFAULT_OPENAI_BASE_URL: $system_conf->openai_base_url,
 			'model' => $system_conf->model,
 			'temperature' => $system_conf->temperature,
 			'max_tokens' => $system_conf->max_tokens,

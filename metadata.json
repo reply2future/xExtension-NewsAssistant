@@ -2,7 +2,7 @@
 	"name": "News Assistant",
 	"author": "Mervyn Zhan",
 	"description": "Use the api of `OpenAI` to summary the news.",
-	"version": 0.8,
+	"version": 0.9,
 	"entrypoint": "NewsAssistant",
 	"type": "system"
 }
