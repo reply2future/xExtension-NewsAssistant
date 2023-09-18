@@ -4,8 +4,9 @@
 	const summaryContentDiv = document.getElementById('summary_content');
 
 	const queryString = window.location.search;
+	const pathname = window.location.pathname;
 	const urlParams = new URLSearchParams(queryString);
-	const evtSource = new EventSource(`/i/?c=assistant&a=stream&cat_id=${urlParams.get('cat_id')}&state=${urlParams.get('state')}`);
+	const evtSource = new EventSource(`${pathname}?c=assistant&a=stream&cat_id=${urlParams.get('cat_id')}&state=${urlParams.get('state')}`);
 
 	function dealWithEventData(data) {
 		if (data == null) return ' ';
@@ -55,7 +56,7 @@
 			showLoading();
 
 			const req = new XMLHttpRequest();
-			req.open('POST', './?c=entry&a=read', true);
+			req.open('POST', `${pathname}?c=entry&a=read`, true);
 			req.responseType = 'json';
 			req.onerror = function (e) {
 				hideLoading();
@@ -69,7 +70,7 @@
 
 				hideLoading();
 
-				window.location.href = `/i/?a=normal&get=c_${urlParams.get('cat_id')}`;
+				window.location.href = `${pathname}?a=normal&get=c_${urlParams.get('cat_id')}`;
 			};
 			req.setRequestHeader('Content-Type', 'application/json');
 			req.send(JSON.stringify({
