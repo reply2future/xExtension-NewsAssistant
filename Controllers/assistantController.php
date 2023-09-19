@@ -15,9 +15,10 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		parent::__construct();
 
 		$system_conf = Minz_Configuration::get('system');
+		$openai_base_url = $system_conf->openai_base_url;
 		$this->config = (object) array(
 			'limit' => $system_conf->limit,
-			'openai_base_url' => empty($system_conf->openai_base_url) ? self::DEFAULT_OPENAI_BASE_URL: $system_conf->openai_base_url,
+			'openai_base_url' => empty($openai_base_url) ? self::DEFAULT_OPENAI_BASE_URL : $openai_base_url,
 			'model' => $system_conf->model,
 			'temperature' => $system_conf->temperature,
 			'max_tokens' => $system_conf->max_tokens,

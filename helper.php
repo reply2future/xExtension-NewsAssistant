@@ -36,6 +36,8 @@ function streamOpenAiApi(object $config, string $prompt, string $content, callab
 		"stream" => true,
 	));
 
+	Minz_Log::debug('Openai base url:' . $config->openai_base_url);
+
 	$curl_info = [
 		CURLOPT_URL            => $config->openai_base_url . OPENAI_API_COMPLETIONS_URL,
 		CURLOPT_RETURNTRANSFER => true,
