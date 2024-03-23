@@ -51,3 +51,29 @@
 	padding: 1px 4px;
 	border-radius: 50%;
 }
+
+.content {
+	margin-left: 30%;
+	margin-right: 30%;
+	padding: 20px;
+
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+@media screen and (max-width: 600px) {
+	.content {
+		margin-left: 2%;
+		margin-right: 2%;
+	}
+}
+
+p {
+	margin-bottom: 20px;
+}
+
+ul, ol {
+	margin-left: 20px;
+}
+
