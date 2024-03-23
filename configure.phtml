@@ -7,6 +7,31 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="group-name" for="provider"><a href="https://github.com/Portkey-AI/gateway/blob/4f6faec65298a0b99a32550f93abf0039fc5930f/src/providers/index.ts#L21" target="_blank"><?php echo _t('ext.field.provider') . " (?)"; ?></a></label>
+		<div class="group-controls">
+			<input list="select-providers" id="provider" name="provider" value="<?php echo htmlentities(FreshRSS_Context::$system_conf->provider ?? 'openai'); ?>">
+			<datalist id="select-providers">
+				<option value="openai">
+				<option value="cohere">
+				<option value="anthropic">
+				<option value="azure-openai">
+				<option value="anyscale">
+				<option value="palm">
+				<option value="together-ai">
+				<option value="google">
+				<option value="mistral-ai">
+				<option value="deepinfra">
+				<option value="stability-ai">
+				<option value="nomic">
+				<option value="ollama">
+				<option value="ai21">
+				<option value="bedrock">
+				<option value="groq">
+				<option value="segmind">
+			</datalist>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="group-name" for="openai_api_key"><a href="https://platform.openai.com/account/api-keys" target="_blank"><?php echo _t('ext.field.openai_api_key') . " (?)"; ?></a></label>
 		<div class="group-controls">
 			<input type="text" name="openai_api_key" id="openai_api_key" value="<?php echo FreshRSS_Context::$system_conf->openai_api_key ?? ''; ?>">

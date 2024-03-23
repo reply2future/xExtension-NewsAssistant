@@ -51,6 +51,7 @@ function streamOpenAiApi(object $config, string $prompt, string $content, callab
 		CURLOPT_HTTPHEADER     => [
 			"Content-Type: application/json",
 			"Authorization: Bearer $config->openai_api_key",
+			"x-portkey-provider: $config->provider",
 		],
 	];
 
