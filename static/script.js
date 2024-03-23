@@ -7,17 +7,24 @@
 	const pathname = window.location.pathname;
 	const urlParams = new URLSearchParams(queryString);
 	const evtSource = new EventSource(`${pathname}?c=assistant&a=stream&cat_id=${urlParams.get('cat_id')}&state=${urlParams.get('state')}`);
+	let rawData = '';
 
 	function dealWithEventData(data) {
 		if (data == null) return ' ';
 
-		return data;
+		return decodeURIComponent(data);
+	}
+
+	function renderContentByMarked() {
+		summaryContentDiv.innerHTML = marked.parse(rawData);
 	}
 
 	evtSource.onmessage = (event) => {
 		console.log('Received message');
 
-		summaryContentDiv.innerHTML += dealWithEventData(event.data);
+		const _msg = dealWithEventData(event.data);
+		rawData += _msg;
+		summaryContentDiv.innerHTML += _msg;
 	};
 
 	evtSource.onopen = (event) => {
@@ -34,6 +41,7 @@
 		console.log('Task done!');
 
 		evtSource.close();
+		renderContentByMarked();
 	});
 
 	evtSource.addEventListener('empty', (event) => {
@@ -48,7 +56,7 @@
 
 		const setReadBtn = document.getElementById('set_read_btn');
 		const readBadge = document.getElementById('read_badge');
-		const summaryIds = JSON.parse(event.data).summary_ids;
+		const summaryIds = JSON.parse(dealWithEventData(event.data)).summary_ids;
 
 		if (summaryIds.length > 0) setReadBtn.onclick = function (ev) {
 			ev.stopPropagation();

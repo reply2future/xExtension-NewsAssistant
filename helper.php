@@ -7,6 +7,11 @@ function endsWithPunctuation($str)
 	return preg_match($pattern, $str);
 }
 
+function encodeURIComponent($str) {
+    $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+    return strtr(rawurlencode($str), $revert);
+}
+
 function _dealResponse($openai_response)
 {
 	return $openai_response->choices[0]->delta->content ?? '';
@@ -51,6 +56,7 @@ function streamOpenAiApi(object $config, string $prompt, string $content, callab
 		CURLOPT_HTTPHEADER     => [
 			"Content-Type: application/json",
 			"Authorization: Bearer $config->openai_api_key",
+			"x-portkey-provider: $config->provider",
 		],
 	];
 
