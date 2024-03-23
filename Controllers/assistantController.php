@@ -46,6 +46,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 	{
 		Minz_View::appendStyle($this->getFileUrl('style.css', 'css'));
 		Minz_View::appendScript($this->getFileUrl('script.js', 'js'));
+		Minz_View::appendScript($this->getFileUrl('marked.min.js', 'js'));
 	}
 
 	private function _echoData(string $data, string $event_name = '')
@@ -87,7 +88,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 				$content,
 				function ($msg) {
 					if ($msg == null) return;
-					$this->_echoData($msg);
+					$this->_echoData(encodeURIComponent($msg));
 				},
 				function () {
 					$this->_echoData('', 'done');
