@@ -55,7 +55,7 @@
 		<label class="group-name" for="field"><?php echo _t('ext.field.field'); ?></label>
 		<div class="group-controls">
 			<select name="field" id="field">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'content'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'content'); ?></option>
+				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?></option>
 				<option value="title">title</option>
 				<option value="content">content</option>
 			</select>
