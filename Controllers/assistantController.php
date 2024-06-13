@@ -115,7 +115,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 
 	private function getNews(int $cat_id = 0, int $state = FreshRSS_Entry::STATE_NOT_READ, int $limit = 30)
 	{
-		$generator = $this->entryDAO->listWhere(self::NEWS_CATEGORY_TYPE, $cat_id, $state, 'DESC', $limit, '', null);
+		$generator = $this->entryDAO->listWhere(self::NEWS_CATEGORY_TYPE, $cat_id, $state, 'DESC', $limit);
 		$result = array();
 		foreach ($generator as $entry) {
 			$result[] = $entry->toArray();
