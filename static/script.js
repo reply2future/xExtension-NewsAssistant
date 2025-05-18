@@ -29,18 +29,22 @@
 
 	evtSource.onopen = (event) => {
 		console.log('Connected the server');
+
+		showLoading();
 	};
 
 	evtSource.onerror = (err) => {
 		console.error("EventSource failed:", err);
 
 		evtSource.close();
+		hideLoading();
 	};
 
 	evtSource.addEventListener('done', () => {
 		console.log('Task done!');
 
 		evtSource.close();
+		hideLoading();
 		renderContentByMarked();
 	});
 
@@ -49,6 +53,7 @@
 
 		summaryContentDiv.innerText = event.data;
 		evtSource.close();
+		hideLoading();
 	});
 
 	evtSource.addEventListener('load_summary_ids', (event) => {
