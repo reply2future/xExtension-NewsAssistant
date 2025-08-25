@@ -11,5 +11,6 @@ return array(
 		'prompt' => 'Prompt',
 		'limit' => 'Read the number of feeds',
 		'field' => 'Field to send to AI',
+		'api_timeout' => 'Timeout for the request to AI API',
 	),
 );

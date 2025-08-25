@@ -38,6 +38,7 @@ class NewsAssistantExtension extends Minz_Extension
 			FreshRSS_Context::$system_conf->model = Minz_Request::param('model', 'gpt-3.5-turbo-16k');
 			FreshRSS_Context::$system_conf->prompt = Minz_Request::param('prompt', 'Summarize this as you are news editor, you should merge the similar topic.');
 			FreshRSS_Context::$system_conf->field = Minz_Request::param('field', 'content');
+			FreshRSS_Context::$system_conf->api_timeout = filter_var(Minz_Request::param('api_timeout', 60), FILTER_VALIDATE_INT);
 			FreshRSS_Context::$system_conf->save();
 		}
 	}
