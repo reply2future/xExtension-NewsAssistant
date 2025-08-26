@@ -2,7 +2,7 @@
 
 require(dirname(__DIR__) . '/helper.php');
 
-class FreshExtension_assistant_Controller extends Minz_ActionController
+class FreshExtension_assistant_Controller extends FreshRSS_ActionController
 {
 	const NEWS_CATEGORY_TYPE = 'c';
 
