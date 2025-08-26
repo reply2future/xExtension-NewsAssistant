@@ -5,10 +5,11 @@ class NewsAssistantExtension extends Minz_Extension
 {
 	public function init()
 	{
-		$this->registerTranslates();
+		parent::init();
 
 		$this->registerController('assistant');
 		$this->registerViews();
+		$this->registerTranslates();
 		$this->registerHook('nav_menu', array($this, 'addSummaryBtn'));
 	}
 
