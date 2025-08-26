@@ -2,7 +2,7 @@
 
 require(dirname(__DIR__) . '/helper.php');
 
-class FreshExtension_assistant_Controller extends Minz_ActionController
+class FreshExtension_assistant_Controller extends FreshRSS_ActionController
 {
 	const NEWS_CATEGORY_TYPE = 'c';
 
@@ -13,7 +13,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 	{
 		parent::__construct();
 
-		$this->config = Minz_Configuration::get('system');
+		$this->config = Minz_Configuration::get('user');
 		$this->entryDAO = FreshRSS_Factory::createEntryDao();
 	}
 
@@ -53,7 +53,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		header('Connection: keep-alive');
 		header('X-Accel-Buffering: no');
 
-		$cat_id = filter_var(Minz_Request::param('cat_id', 0), FILTER_VALIDATE_INT);
+		$cat_id = filter_var(Minz_Request::param('cat_id'), FILTER_VALIDATE_INT);
 		$state = filter_var(Minz_Request::param('state', FreshRSS_Entry::STATE_NOT_READ), FILTER_VALIDATE_INT);
 
 		$news = $this->getNews($cat_id, $state, $this->config->limit);

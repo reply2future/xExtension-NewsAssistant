@@ -54,15 +54,18 @@
 	<div class="form-group">
 		<label class="group-name" for="fields"><?php echo _t('ext.field.fields'); ?></label>
 		<div class="group-controls">
-			<select name="fields" id="fields">
-				<?php
-				$fields_val = implode(',', FreshRSS_Context::$user_conf->fields ?? []) ?? 'title';
-				?>
-				<option value="<?php echo htmlentities($fields_val); ?>" selected="selected"><?php echo htmlentities($fields_val); ?></option>
-				<option value="title">title</option>
-				<option value="content">content</option>
-				<option value="title,content">title,content</option>
-			</select>
+			<?php
+			$selected = FreshRSS_Context::$user_conf->fields ?? ['title', 'content'];
+			if (!is_array($selected)) {
+				$selected = array_filter(array_map('trim', explode(',', $selected)));
+			}
+			$options = ['title' => 'title', 'content' => 'content', 'date' => 'date', 'link' => 'link'];
+			foreach ($options as $val => $label) {
+				$id = 'fields_' . $val;
+				$checked = in_array($val, $selected) ? ' checked="checked"' : '';
+				echo '<label for="' . htmlentities($id) . '"><input type="checkbox" name="fields[]" id="' . htmlentities($id) . '" value="' . htmlentities($val) . '"' . $checked . '> ' . htmlentities($label) . '</label> ';
+			}
+			?>
 		</div>
 	</div>
 	<div class="form-group">
