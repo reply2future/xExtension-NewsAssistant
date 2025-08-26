@@ -30,17 +30,17 @@ class NewsAssistantExtension extends Minz_Extension
 		$this->registerTranslates();
 
 		if (Minz_Request::isPost()) {
-			FreshRSS_Context::$system_conf->openai_base_url = rtrim(Minz_Request::param('openai_base_url', 'https://api.openai.com'), '/');
-			FreshRSS_Context::$system_conf->openai_api_key = Minz_Request::param('openai_api_key', '');
-			FreshRSS_Context::$system_conf->provider = Minz_Request::param('provider', 'openai');
-			FreshRSS_Context::$system_conf->max_tokens = filter_var(Minz_Request::param('max_tokens', 7), FILTER_VALIDATE_INT);
-			FreshRSS_Context::$system_conf->temperature = filter_var(Minz_Request::param('temperature', 1), FILTER_VALIDATE_FLOAT);;
-			FreshRSS_Context::$system_conf->limit = filter_var(Minz_Request::param('limit', 30), FILTER_VALIDATE_FLOAT);;
-			FreshRSS_Context::$system_conf->model = Minz_Request::param('model', 'gpt-3.5-turbo-16k');
-			FreshRSS_Context::$system_conf->prompt = Minz_Request::param('prompt', 'Summarize this as you are news editor, you should merge the similar topic.');
-			FreshRSS_Context::$system_conf->fields = array_values(array_filter(array_map('trim', explode(',', Minz_Request::param('fields', 'title,content'))), 'strlen'));
-			FreshRSS_Context::$system_conf->api_timeout = filter_var(Minz_Request::param('api_timeout', 60), FILTER_VALIDATE_INT);
-			FreshRSS_Context::$system_conf->save();
+			FreshRSS_Context::$user_conf->openai_base_url = rtrim(Minz_Request::param('openai_base_url', 'https://api.openai.com'), '/');
+			FreshRSS_Context::$user_conf->openai_api_key = Minz_Request::param('openai_api_key', '');
+			FreshRSS_Context::$user_conf->provider = Minz_Request::param('provider', 'openai');
+			FreshRSS_Context::$user_conf->max_tokens = filter_var(Minz_Request::param('max_tokens', 7), FILTER_VALIDATE_INT);
+			FreshRSS_Context::$user_conf->temperature = filter_var(Minz_Request::param('temperature', 1), FILTER_VALIDATE_FLOAT);;
+			FreshRSS_Context::$user_conf->limit = filter_var(Minz_Request::param('limit', 30), FILTER_VALIDATE_FLOAT);;
+			FreshRSS_Context::$user_conf->model = Minz_Request::param('model', 'gpt-3.5-turbo-16k');
+			FreshRSS_Context::$user_conf->prompt = Minz_Request::param('prompt', 'Summarize this as you are news editor, you should merge the similar topic.');
+			FreshRSS_Context::$user_conf->fields = array_values(array_filter(array_map('trim', explode(',', Minz_Request::param('fields', 'title,content'))), 'strlen'));
+			FreshRSS_Context::$user_conf->api_timeout = filter_var(Minz_Request::param('api_timeout', 60), FILTER_VALIDATE_INT);
+			FreshRSS_Context::$user_conf->save();
 		}
 	}
 
