@@ -52,12 +52,16 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="field"><?php echo _t('ext.field.field'); ?></label>
+		<label class="group-name" for="fields"><?php echo _t('ext.field.fields'); ?></label>
 		<div class="group-controls">
-			<select name="field" id="field">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?></option>
+			<select name="fields" id="fields">
+				<?php
+				$fields_val = implode(',', FreshRSS_Context::$system_conf->fields) ?? 'title';
+				?>
+				<option value="<?php echo htmlentities($fields_val); ?>" selected="selected"><?php echo htmlentities($fields_val); ?></option>
 				<option value="title">title</option>
 				<option value="content">content</option>
+				<option value="title,content">title,content</option>
 			</select>
 		</div>
 	</div>
