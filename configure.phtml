@@ -3,13 +3,13 @@
 	<div class="form-group">
 		<label class="group-name" for="openai_base_url"><?php echo _t('ext.field.openai_base_url'); ?></label>
 		<div class="group-controls">
-			<input type="text" name="openai_base_url" id="openai_base_url" value="<?php echo FreshRSS_Context::$system_conf->openai_base_url ?? 'https://api.openai.com'; ?>">
+			<input type="text" name="openai_base_url" id="openai_base_url" value="<?php echo FreshRSS_Context::$user_conf->openai_base_url ?? 'https://api.openai.com'; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="provider"><a href="https://github.com/Portkey-AI/gateway/blob/4f6faec65298a0b99a32550f93abf0039fc5930f/src/providers/index.ts#L21" target="_blank"><?php echo _t('ext.field.provider') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<input list="select-providers" id="provider" name="provider" value="<?php echo htmlentities(FreshRSS_Context::$system_conf->provider ?? 'openai'); ?>">
+			<input list="select-providers" id="provider" name="provider" value="<?php echo htmlentities(FreshRSS_Context::$user_conf->provider ?? 'openai'); ?>">
 			<datalist id="select-providers">
 				<option value="openai">
 				<option value="cohere">
@@ -34,50 +34,54 @@
 	<div class="form-group">
 		<label class="group-name" for="openai_api_key"><a href="https://platform.openai.com/account/api-keys" target="_blank"><?php echo _t('ext.field.openai_api_key') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<input type="text" name="openai_api_key" id="openai_api_key" value="<?php echo FreshRSS_Context::$system_conf->openai_api_key ?? ''; ?>">
+			<input type="text" name="openai_api_key" id="openai_api_key" value="<?php echo FreshRSS_Context::$user_conf->openai_api_key ?? ''; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="max_tokens"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-max_tokens" target="_blank"><?php echo _t('ext.field.max_tokens') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<input type="range" name="max_tokens" id="max_tokens" min="7" max="4096" value="<?php echo FreshRSS_Context::$system_conf->max_tokens ?? 2048; ?>">
-			<output for="max_tokens"><?php echo FreshRSS_Context::$system_conf->max_tokens ?? 2048; ?></output>
+			<input type="range" name="max_tokens" id="max_tokens" min="7" max="4096" value="<?php echo FreshRSS_Context::$user_conf->max_tokens ?? 2048; ?>">
+			<output for="max_tokens"><?php echo FreshRSS_Context::$user_conf->max_tokens ?? 2048; ?></output>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="temperature"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature" target="_blank"><?php echo _t('ext.field.temperature') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<input type="range" name="temperature" id="temperature" min="0" max="2" step="0.1" value="<?php echo FreshRSS_Context::$system_conf->temperature ?? 1.0; ?>">
-			<output for="temperature"><?php echo FreshRSS_Context::$system_conf->temperature ?? 1.0; ?></output>
+			<input type="range" name="temperature" id="temperature" min="0" max="2" step="0.1" value="<?php echo FreshRSS_Context::$user_conf->temperature ?? 1.0; ?>">
+			<output for="temperature"><?php echo FreshRSS_Context::$user_conf->temperature ?? 1.0; ?></output>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="group-name" for="field"><?php echo _t('ext.field.field'); ?></label>
+		<label class="group-name" for="fields"><?php echo _t('ext.field.fields'); ?></label>
 		<div class="group-controls">
-			<select name="field" id="field">
-				<option value="<?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?>" selected="selected"><?php echo htmlentities(FreshRSS_Context::$system_conf->field ?? 'title'); ?></option>
+			<select name="fields" id="fields">
+				<?php
+				$fields_val = implode(',', FreshRSS_Context::$user_conf->fields ?? []) ?? 'title';
+				?>
+				<option value="<?php echo htmlentities($fields_val); ?>" selected="selected"><?php echo htmlentities($fields_val); ?></option>
 				<option value="title">title</option>
 				<option value="content">content</option>
+				<option value="title,content">title,content</option>
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="limit"><?php echo _t('ext.field.limit'); ?></label>
 		<div class="group-controls">
-			<input type="number" name="limit" id="limit" value="<?php echo FreshRSS_Context::$system_conf->limit ?? 30; ?>">
+			<input type="number" name="limit" id="limit" value="<?php echo FreshRSS_Context::$user_conf->limit ?? 30; ?>">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="group-name" for="prompt"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-content" target="_blank"><?php echo _t('ext.field.prompt') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<textarea id="prompt" name="prompt" rows="4" cols="50"><?php echo FreshRSS_Context::$system_conf->prompt ?? 'Summarize this as you are news editor, you should merge the similar topic.'; ?></textarea>
+			<textarea id="prompt" name="prompt" rows="4" cols="50"><?php echo FreshRSS_Context::$user_conf->prompt ?? 'Summarize this as you are news editor, you should merge the similar topic.'; ?></textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<!-- make the input element to support input and select -->
 		<label class="group-name" for="model"><a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-model" target="_blank"><?php echo _t('ext.field.model') . " (?)"; ?></a></label>
 		<div class="group-controls">
-			<input list="select-models" id="model" name="model" value="<?php echo htmlentities(FreshRSS_Context::$system_conf->model ?? 'gpt-3.5-turbo-16k'); ?>">
+			<input list="select-models" id="model" name="model" value="<?php echo htmlentities(FreshRSS_Context::$user_conf->model ?? 'gpt-3.5-turbo-16k'); ?>">
 			<datalist id="select-models">
 				<option value="gpt-4">
 				<option value="gpt-4-0613">
@@ -94,9 +98,11 @@
 	<div class="form-group">
 		<label class="group-name" for="api_timeout"><?php echo _t('ext.field.api_timeout'); ?></label>
 		<div class="group-controls">
-			<input type="number" name="api_timeout" id="api_timeout" value="<?php echo FreshRSS_Context::$system_conf->api_timeout ?? 60; ?>">
+			<input type="number" name="api_timeout" id="api_timeout" value="<?php echo FreshRSS_Context::$user_conf->api_timeout ?? 60; ?>">
 		</div>
 	</div>
+
+	<p class="alert alert-warn"><?php echo _t('ext.field.configure_tips'); ?></p>
 
 	<div class="form-group form-actions">
 		<div class="group-controls">

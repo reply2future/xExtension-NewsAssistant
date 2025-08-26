@@ -5,8 +5,6 @@ require(dirname(__DIR__) . '/helper.php');
 class FreshExtension_assistant_Controller extends Minz_ActionController
 {
 	const NEWS_CATEGORY_TYPE = 'c';
-	const DEFAULT_OPENAI_BASE_URL = 'https://api.openai.com';
-	const DEFAULT_PROVIDER = 'openai';
 
 	private $config = array();
 	private $entryDAO = null;
@@ -15,20 +13,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 	{
 		parent::__construct();
 
-		$system_conf = Minz_Configuration::get('system');
-		$openai_base_url = $system_conf->openai_base_url;
-		$provider = $system_conf->provider;
-		$this->config = (object) array(
-			'limit' => $system_conf->limit,
-			'openai_base_url' => empty($openai_base_url) ? self::DEFAULT_OPENAI_BASE_URL : $openai_base_url,
-			'provider' => empty($provider) ? self::DEFAULT_PROVIDER : $provider,
-			'model' => $system_conf->model,
-			'temperature' => $system_conf->temperature,
-			'max_tokens' => $system_conf->max_tokens,
-			'openai_api_key' => $system_conf->openai_api_key,
-			'prompt' => $system_conf->prompt,
-			'field' => $system_conf->field,
-		);
+		$this->config = Minz_Configuration::get('system');
 		$this->entryDAO = FreshRSS_Factory::createEntryDao();
 	}
 
@@ -80,7 +65,7 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		$this->_echoData(json_encode(array('summary_ids' => $summary_ids)), 'load_summary_ids');
 
 		if (count($news) > 0) {
-			$content = self::buildNewsContent($this->config->field, $news);
+			$content = self::buildNewsContent($this->config->fields, $news);
 
 			streamOpenAiApi(
 				$this->config,
@@ -101,16 +86,22 @@ class FreshExtension_assistant_Controller extends Minz_ActionController
 		}
 	}
 
-	public static function buildNewsContent(string $field, array $news)
+	public static function buildNewsContent(array $fields, array $news)
 	{
-		$pickTitleFn = function ($newsItem) use ($field) {
-			$title = $newsItem[$field];
+		$pickFieldsFn = function ($newsItem) use ($fields) {
+			$parts = array();
+			foreach ($fields as $fieldName) {
+				$content = isset($newsItem[$fieldName]) ? trim($newsItem[$fieldName]) : '';
+				$parts[] = $fieldName . ': ' . $content;
+			}
 
-			if (endsWithPunctuation($title)) return $title;
-			return $title . '.';
+			$itemText = implode(', ', $parts);
+
+			if (endsWithPunctuation($itemText)) return $itemText;
+			return $itemText . '.';
 		};
 
-		return implode('', array_map($pickTitleFn, $news));
+		return implode("\n", array_map($pickFieldsFn, $news));
 	}
 
 	private function getNews(int $cat_id = 0, int $state = FreshRSS_Entry::STATE_NOT_READ, int $limit = 30)
