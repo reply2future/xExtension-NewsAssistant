@@ -11,5 +11,6 @@ return array(
 		'prompt' => 'Prompt',
 		'limit' => '一次性读取文章数量',
 		'field' => '发送给AI的字段',
+		'api_timeout' => 'API 请求超时',
 	),
 );
