@@ -1,4 +1,4 @@
-(function () {
+function init() {
 	const loader = document.getElementById('loader');
 
 	const summaryContentDiv = document.getElementById('summary_content');
@@ -109,4 +109,10 @@
 	backBtn.onclick = () => {
 		history.back();
 	}
-}());
+}
+
+if (document.readyState && document.readyState !== 'loading' && typeof window.context !== 'undefined' && typeof window.context.extensions !== 'undefined') {
+	init();
+} else {
+	document.addEventListener('freshrss:globalContextLoaded', init, false);
+}
