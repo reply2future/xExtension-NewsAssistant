@@ -12,6 +12,6 @@ return array(
 		'limit' => 'Anzahl eingelesener Feed-Elemente',
 		'field' => 'Inhalt, der an die KI gesendet wird',
 		'api_timeout' => 'Maximale API Anfragedauer (Sekunden)',
-		'configure_tips' => 'Für `KI Anbieter` und `Modell` können jegliche gültige Werte eingetragen werden, auch wenn sie nicht in der Auswahlliste auftauchen. Gehe sicher, dass diese für deinen KI Anbieter oder [Portkey-AI/gateway](https://portkey.ai/docs/integrations/llms) gültig sind.',
+		'configure_tips' => 'Für <code>KI Anbieter</code> und <code>Modell</code> können jegliche gültige Werte eingetragen werden, auch wenn sie nicht in der Auswahlliste auftauchen. Gehe sicher, dass diese für deinen KI Anbieter oder <a href="https://portkey.ai/docs/integrations/llms">Portkey-AI/gateway</a> gültig sind.',
 	),
 );

@@ -12,6 +12,6 @@ return array(
 		'limit' => 'Read the number of feeds',
 		'fields' => 'Fields to send to AI',
 		'api_timeout' => 'API request timeout (seconds)',
-		'configure_tips' => 'You could input any valid value for `AI Provider` and `Model` even thought they are not in the select list. But make sure they are supported by your AI Provider or [Portkey-AI/gateway](https://portkey.ai/docs/integrations/llms).',
+		'configure_tips' => 'You could input any valid value for <code>AI Provider</code> and <code>Model</code> even thought they are not in the select list. But make sure they are supported by your AI Provider or <a href="https://portkey.ai/docs/integrations/llms">Portkey-AI/gateway</a>.',
 	),
 );
